@@ -6,40 +6,58 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="flex justify-center items-center h-screen">
-    <div class="w-[500px] p-8 rounded-md bg-gray-600 mx-auto">
-      <div class="font-medium p-4 text-right text-4xl text-white">Ansio</div>
+  <body class="flex justify-center items-center min-h-screen py-16">
+    <div class="w-[500px] p-8 rounded-md bg-gray-600 mx-auto shadow-lg">
+      <div class="font-bold p-4 text-right text-4xl text-white italic">
+        ANSIO
+      </div>
       <div
         id="display"
-        class="text-3xl font-medium p-8 border-black border rounded-md bg-white mb-4 shadow-md"
+        class="font-medium p-8 border-black border rounded-md bg-white mb-4 shadow-md text-right"
       >
-        Display
+        <div id="display__sub" class="text-xl"></div>
+        <div id="display__main" class="text-3xl">0</div>
       </div>
       <div class="grid-cols-12 grid gap-2">
+        <button class="input-btn col-span-9" id="clear-btn">CLEAR</button>
+        <button class="input-btn col-span-3 op-btn" data-value="DIV">
+          &div;
+        </button>
         <button class="input-btn col-span-3 num-btn" data-value="7">7</button>
         <button class="input-btn col-span-3 num-btn" data-value="8">8</button>
         <button class="input-btn col-span-3 num-btn" data-value="9">9</button>
-        <button class="input-btn col-span-3">&times;</button>
+        <button class="input-btn col-span-3 op-btn" data-value="MUL">
+          &times;
+        </button>
         <button class="input-btn col-span-3 num-btn" data-value="4">4</button>
         <button class="input-btn col-span-3 num-btn" data-value="5">5</button>
         <button class="input-btn col-span-3 num-btn" data-value="6">6</button>
-        <button class="input-btn col-span-3">&plus;</button>
+        <button class="input-btn col-span-3 op-btn" data-value="ADD">
+          &plus;
+        </button>
 
         <button class="input-btn col-span-3 num-btn" data-value="1">1</button>
         <button class="input-btn col-span-3 num-btn" data-value="2">2</button>
         <button class="input-btn col-span-3 num-btn" data-value="3">3</button>
-        <button class="input-btn col-span-3">&minus;</button>
-        <button class="input-btn col-span-3">&plusmn;;</button>
-        <button class="input-btn col-span-3">0</button>
+        <button class="input-btn col-span-3 op-btn" data-value="SUB">
+          &minus;
+        </button>
+        <button class="input-btn col-span-3" id="sign-btn">&plusmn;</button>
+        <button class="input-btn col-span-3 num-btn" data-value="0">0</button>
 
         <button class="input-btn col-span-3">.</button>
         <button
+          id="eval-btn"
           class="input-btn col-span-3 bg-blue-700 text-white hover:bg-blue-800"
         >
           =
         </button>
       </div>
     </div>
+    <script>
+      var exports = {};
+    </script>
+
     <script src="index.js"></script>
   </body>
 </html>
