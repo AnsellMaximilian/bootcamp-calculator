@@ -3,7 +3,14 @@ enum Operation {
   SUB = "SUB",
   MUL = "MUL",
   DIV = "DIV",
+  EXP = "EXP",
   LOG = "LOG",
+  SIN = "SIN",
+  COS = "COS",
+  TAN = "TAN",
+  REC = "REC",
+  SQR = "SQR",
+  SCI = "SCI",
 }
 
 const opMap = {
@@ -11,10 +18,19 @@ const opMap = {
   [Operation.SUB]: "-",
   [Operation.MUL]: "x",
   [Operation.DIV]: "/",
-  [Operation.LOG]: "log",
+  [Operation.EXP]: "^",
 };
 
-const isOpEnclosing = (op: Operation) => op === Operation.LOG;
+const isOpUnary = (op: Operation) =>
+  [
+    Operation.LOG,
+    Operation.SIN,
+    Operation.COS,
+    Operation.TAN,
+    Operation.REC,
+    Operation.SQR,
+    Operation.SCI,
+  ].includes(op);
 
 const numBtns = document.querySelectorAll(".num-btn");
 const opBtns = document.querySelectorAll(".op-btn");
@@ -71,7 +87,16 @@ opBtns.forEach((btn) => {
 });
 
 evalBtn.addEventListener("click", () => {
-  evaluate();
+  if (rightVal != null && currentOp) {
+    subDisplay.textContent = subDisplay.textContent + " " + rightVal + " =";
+
+    const res = evaluate(leftVal, currentOp, rightVal);
+    leftVal = res;
+    currentOp = null;
+    rightVal = null;
+    mainDisplay.textContent = res.toString();
+    shouldReset = true;
+  }
 });
 
 clearBtn.addEventListener("click", () => clear());
@@ -102,17 +127,30 @@ const appendNumber = (
 };
 
 const addOp = (op: Operation) => {
-  currentOp = op;
-  subDisplay.textContent = leftVal + " " + opMap[op];
+  if (!isOpUnary(op)) {
+    currentOp = op;
+    subDisplay.textContent = leftVal + " " + opMap[op];
+  } else {
+    if (!currentOp) {
+      subDisplay.textContent = formatUnary(leftVal, op);
+      leftVal = evaluate(leftVal, op);
+    } else if (rightVal && currentOp) {
+      subDisplay.textContent =
+        leftVal + " " + opMap[currentOp] + " " + formatUnary(rightVal, op);
+      leftVal = evaluate(leftVal, currentOp, evaluate(rightVal, op));
+    }
+    currentOp = null;
+    rightVal = null;
+    shouldReset = true;
+    mainDisplay.textContent = leftVal.toString();
+  }
 };
 
-const evaluate = () => {
-  if (rightVal != null && currentOp) {
-    subDisplay.textContent = subDisplay.textContent + " " + rightVal + " =";
+const evaluate = (leftVal: number, op: Operation, rightVal?: number) => {
+  let res: number;
 
-    let res: number;
-
-    switch (currentOp) {
+  if (rightVal) {
+    switch (op) {
       case Operation.ADD:
         res = leftVal + rightVal;
         break;
@@ -125,17 +163,43 @@ const evaluate = () => {
       case Operation.DIV:
         res = leftVal / rightVal;
         break;
-
+      case Operation.EXP:
+        res = Math.pow(leftVal, rightVal);
+        break;
       default:
         res = 0;
         break;
     }
-    leftVal = res;
-    currentOp = null;
-    rightVal = null;
-    mainDisplay.textContent = res.toString();
-    shouldReset = true;
+  } else {
+    switch (op) {
+      case Operation.LOG:
+        res = Math.log10(leftVal);
+        break;
+      case Operation.SIN:
+        res = leftVal * (Math.PI / 180);
+        break;
+      case Operation.COS:
+        res = Math.cos(leftVal * (Math.PI / 180));
+        break;
+      case Operation.TAN:
+        res = Math.tan(leftVal * (Math.PI / 180));
+        break;
+      case Operation.REC:
+        res = 1 / leftVal;
+        break;
+      case Operation.SQR:
+        res = leftVal * leftVal;
+        break;
+      case Operation.SCI:
+        res = Math.pow(10, leftVal);
+        break;
+      default:
+        res = 0;
+        break;
+    }
   }
+
+  return res;
 };
 
 const clear = () => {
@@ -144,4 +208,38 @@ const clear = () => {
   rightVal = null;
   subDisplay.textContent = "";
   mainDisplay.textContent = leftVal.toString();
+};
+
+const formatUnary = (num: number, op: Operation): string => {
+  let res: string;
+  switch (op) {
+    case Operation.LOG:
+      res = `log(${num})`;
+      break;
+    case Operation.SIN:
+      res = `sin(${num})`;
+      break;
+    case Operation.COS:
+      res = `cos(${num})`;
+      break;
+    case Operation.TAN:
+      res = `tan(${num})`;
+      break;
+
+    case Operation.REC:
+      res = `1/${num}`;
+      break;
+
+    case Operation.SQR:
+      res = `${num}^2`;
+      break;
+    case Operation.SCI:
+      res = `10^${num}`;
+      break;
+
+    default:
+      res = `${num}`;
+      break;
+  }
+  return res;
 };

@@ -15,42 +15,71 @@
       </div>
       <div
         id="display"
-        class="font-medium p-8 border-black border rounded-md bg-white mb-4 shadow-md text-right"
+        class="font-medium p-4 border-black border rounded-md bg-white mb-4 shadow-md text-right"
       >
-        <div id="display__sub" class="text-xl"></div>
+        <div
+          id="display__sub"
+          class="text-base w-full h-8 flex items-center justify-end"
+        ></div>
         <div id="display__main" class="text-3xl">0</div>
       </div>
       <div class="grid-cols-12 grid gap-2">
-        <button class="input-btn col-span-9" id="clear-btn">CLEAR</button>
-        <button class="input-btn col-span-3 op-btn" data-value="DIV">
+        <button class="input-btn col-span-10" id="clear-btn">CLEAR</button>
+        <button class="input-btn col-span-2 op-btn" data-value="DIV">
           &div;
         </button>
-        <button class="input-btn col-span-3 num-btn" data-value="7">7</button>
-        <button class="input-btn col-span-3 num-btn" data-value="8">8</button>
-        <button class="input-btn col-span-3 num-btn" data-value="9">9</button>
-        <button class="input-btn col-span-3 op-btn" data-value="MUL">
+        <button class="input-btn col-span-2 op-btn text-sm" data-value="SIN">
+          Sin
+        </button>
+        <button class="input-btn col-span-2 op-btn text-sm" data-value="COS">
+          Cos
+        </button>
+        <button class="input-btn col-span-2 num-btn" data-value="7">7</button>
+        <button class="input-btn col-span-2 num-btn" data-value="8">8</button>
+        <button class="input-btn col-span-2 num-btn" data-value="9">9</button>
+        <button class="input-btn col-span-2 op-btn" data-value="MUL">
           &times;
         </button>
-        <button class="input-btn col-span-3 num-btn" data-value="4">4</button>
-        <button class="input-btn col-span-3 num-btn" data-value="5">5</button>
-        <button class="input-btn col-span-3 num-btn" data-value="6">6</button>
-        <button class="input-btn col-span-3 op-btn" data-value="ADD">
+        <button class="input-btn col-span-2 op-btn" data-value="REC">
+          <span class="align-super text-sm">1</span>/<span
+            class="align-sub text-sm"
+            >x</span
+          >
+        </button>
+        <button class="input-btn col-span-2 op-btn text-sm" data-value="TAN">
+          Tan
+        </button>
+        <button class="input-btn col-span-2 num-btn" data-value="4">4</button>
+        <button class="input-btn col-span-2 num-btn" data-value="5">5</button>
+        <button class="input-btn col-span-2 num-btn" data-value="6">6</button>
+        <button class="input-btn col-span-2 op-btn" data-value="ADD">
           &plus;
         </button>
-
-        <button class="input-btn col-span-3 num-btn" data-value="1">1</button>
-        <button class="input-btn col-span-3 num-btn" data-value="2">2</button>
-        <button class="input-btn col-span-3 num-btn" data-value="3">3</button>
-        <button class="input-btn col-span-3 op-btn" data-value="SUB">
+        <button class="input-btn col-span-2 op-btn" data-value="SQR">
+          x<span class="align-super text-xs">2</span>
+        </button>
+        <button class="input-btn col-span-2 op-btn" data-value="SCI">
+          10<span class="align-super text-xs">x</span>
+        </button>
+        <button class="input-btn col-span-2 num-btn" data-value="1">1</button>
+        <button class="input-btn col-span-2 num-btn" data-value="2">2</button>
+        <button class="input-btn col-span-2 num-btn" data-value="3">3</button>
+        <button class="input-btn col-span-2 op-btn" data-value="SUB">
           &minus;
         </button>
-        <button class="input-btn col-span-3" id="sign-btn">&plusmn;</button>
-        <button class="input-btn col-span-3 num-btn" data-value="0">0</button>
+        <button class="input-btn col-span-2 op-btn" data-value="EXP">
+          x<span class="align-super text-xs">y</span>
+        </button>
+        <button class="input-btn col-span-2 op-btn" data-value="LOG">
+          log
+        </button>
+        <button class="input-btn col-span-2" id="sign-btn">&plusmn;</button>
+        <button class="input-btn col-span-2 num-btn" data-value="0">0</button>
 
-        <button class="input-btn col-span-3" id="decimal-btn">.</button>
+        <button class="input-btn col-span-2" id="decimal-btn">.</button>
         <button
           id="eval-btn"
-          class="input-btn col-span-3 bg-blue-700 text-white hover:bg-blue-800"
+          class="input-btn col-span-2 bg-blue-700 text-white hover:bg-blue-800"
         >
           =
         </button>
