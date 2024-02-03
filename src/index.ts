@@ -1,28 +1,34 @@
-export enum Operation {
+enum Operation {
   ADD = "ADD",
   SUB = "SUB",
   MUL = "MUL",
   DIV = "DIV",
+  LOG = "LOG",
 }
 
-export const opMap = {
+const opMap = {
   [Operation.ADD]: "+",
   [Operation.SUB]: "-",
   [Operation.MUL]: "x",
   [Operation.DIV]: "/",
+  [Operation.LOG]: "log",
 };
+
+const isOpEnclosing = (op: Operation) => op === Operation.LOG;
 
 const numBtns = document.querySelectorAll(".num-btn");
 const opBtns = document.querySelectorAll(".op-btn");
 const evalBtn = document.querySelector("#eval-btn")!;
 const clearBtn = document.querySelector("#clear-btn")!;
 const signBtn = document.querySelector("#sign-btn")!;
+const decimalBtn = document.querySelector("#decimal-btn")!;
 const mainDisplay = document.querySelector("#display__main")!;
 const subDisplay = document.querySelector("#display__sub")!;
 
 let leftVal = 0;
 let rightVal: number | null = null;
 let currentOp: Operation | null = null;
+let hasDecimal = false;
 
 let shouldReset = false;
 
@@ -38,14 +44,16 @@ numBtns.forEach((btn) => {
       if (!currentOp) {
         const newLeftVal = appendNumber(
           leftVal,
-          parseFloat(btn.dataset.value as string)
+          parseFloat(btn.dataset.value as string),
+          hasDecimal
         );
         leftVal = newLeftVal;
         mainDisplay.textContent = newLeftVal.toString();
       } else {
         const newRightVal = appendNumber(
           rightVal || 0,
-          parseFloat(btn.dataset.value as string)
+          parseFloat(btn.dataset.value as string),
+          hasDecimal
         );
         rightVal = newRightVal;
         mainDisplay.textContent = newRightVal.toString();
@@ -78,8 +86,19 @@ signBtn.addEventListener("click", () => {
   mainDisplay.textContent = newVal.toString();
 });
 
-const appendNumber = (oldVal: number, num: number) => {
-  return parseFloat(oldVal.toString() + num.toString());
+decimalBtn.addEventListener("click", () => {
+  hasDecimal = true;
+  mainDisplay.textContent += ".";
+});
+
+const appendNumber = (
+  oldVal: number,
+  num: number,
+  hasDecimal: boolean = false
+) => {
+  return parseFloat(
+    oldVal.toString() + (hasDecimal ? "." : "") + num.toString()
+  );
 };
 
 const addOp = (op: Operation) => {

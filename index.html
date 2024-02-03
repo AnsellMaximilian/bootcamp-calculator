@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="flex justify-center items-center min-h-screen py-16">
-    <div class="w-[500px] p-8 rounded-md bg-gray-600 mx-auto shadow-lg">
+    <div
+      class="w-[500px] max-w-full p-8 rounded-md bg-gray-600 mx-auto shadow-lg"
+    >
       <div class="font-bold p-4 text-right text-4xl text-white italic">
         ANSIO
       </div>
@@ -45,7 +47,7 @@
         <button class="input-btn col-span-3" id="sign-btn">&plusmn;</button>
         <button class="input-btn col-span-3 num-btn" data-value="0">0</button>
 
-        <button class="input-btn col-span-3">.</button>
+        <button class="input-btn col-span-3" id="decimal-btn">.</button>
         <button
           id="eval-btn"
           class="input-btn col-span-3 bg-blue-700 text-white hover:bg-blue-800"
@@ -54,9 +56,6 @@
         </button>
       </div>
     </div>
-    <script>
-      var exports = {};
-    </script>
 
     <script src="index.js"></script>
   </body>

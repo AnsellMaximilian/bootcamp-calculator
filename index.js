@@ -1,30 +1,32 @@
-"use strict";
 var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.opMap = exports.Operation = void 0;
 var Operation;
 (function (Operation) {
     Operation["ADD"] = "ADD";
     Operation["SUB"] = "SUB";
     Operation["MUL"] = "MUL";
     Operation["DIV"] = "DIV";
-})(Operation || (exports.Operation = Operation = {}));
-exports.opMap = (_a = {},
+    Operation["LOG"] = "LOG";
+})(Operation || (Operation = {}));
+var opMap = (_a = {},
     _a[Operation.ADD] = "+",
     _a[Operation.SUB] = "-",
     _a[Operation.MUL] = "x",
     _a[Operation.DIV] = "/",
+    _a[Operation.LOG] = "log",
     _a);
+var isOpEnclosing = function (op) { return op === Operation.LOG; };
 var numBtns = document.querySelectorAll(".num-btn");
 var opBtns = document.querySelectorAll(".op-btn");
 var evalBtn = document.querySelector("#eval-btn");
 var clearBtn = document.querySelector("#clear-btn");
 var signBtn = document.querySelector("#sign-btn");
+var decimalBtn = document.querySelector("#decimal-btn");
 var mainDisplay = document.querySelector("#display__main");
 var subDisplay = document.querySelector("#display__sub");
 var leftVal = 0;
 var rightVal = null;
 var currentOp = null;
+var hasDecimal = false;
 var shouldReset = false;
 numBtns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
@@ -35,12 +37,12 @@ numBtns.forEach(function (btn) {
                 clear();
             }
             if (!currentOp) {
-                var newLeftVal = appendNumber(leftVal, parseFloat(btn_1.dataset.value));
+                var newLeftVal = appendNumber(leftVal, parseFloat(btn_1.dataset.value), hasDecimal);
                 leftVal = newLeftVal;
                 mainDisplay.textContent = newLeftVal.toString();
             }
             else {
-                var newRightVal = appendNumber(rightVal || 0, parseFloat(btn_1.dataset.value));
+                var newRightVal = appendNumber(rightVal || 0, parseFloat(btn_1.dataset.value), hasDecimal);
                 rightVal = newRightVal;
                 mainDisplay.textContent = newRightVal.toString();
             }
@@ -68,12 +70,17 @@ signBtn.addEventListener("click", function () {
     }
     mainDisplay.textContent = newVal.toString();
 });
-var appendNumber = function (oldVal, num) {
-    return parseFloat(oldVal.toString() + num.toString());
+decimalBtn.addEventListener("click", function () {
+    hasDecimal = true;
+    mainDisplay.textContent += ".";
+});
+var appendNumber = function (oldVal, num, hasDecimal) {
+    if (hasDecimal === void 0) { hasDecimal = false; }
+    return parseFloat(oldVal.toString() + (hasDecimal ? "." : "") + num.toString());
 };
 var addOp = function (op) {
     currentOp = op;
-    subDisplay.textContent = leftVal + " " + exports.opMap[op];
+    subDisplay.textContent = leftVal + " " + opMap[op];
 };
 var evaluate = function () {
     if (rightVal != null && currentOp) {

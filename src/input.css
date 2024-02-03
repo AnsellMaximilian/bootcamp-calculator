@@ -4,6 +4,6 @@
 
 @layer components {
   .input-btn {
-    @apply bg-gray-200 p-8 rounded-md shadow-md hover:bg-gray-400 text-xl font-bold;
+    @apply bg-gray-200 p-4 rounded-md shadow-md hover:bg-gray-400 text-xl font-bold;
   }
 }
